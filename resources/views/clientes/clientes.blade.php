@@ -20,36 +20,18 @@
     </tr>
   </thead>
   <tbody>
+    @foreach($clientes as $cliente)
     <tr>
-      <td>Arthur Souza Andrade</td>
-      <td>arthursandrade@icloud.com</td>
-      <td>(16) 3311-6413</td>
+      <td>{{$cliente->nome}}</td>
+      <td>{{$cliente->email}}</td>
+      <td>{{$cliente->telefone}}</td>
       <td>
-        <a href="#" class="btn btn-primary" title="Alterar"><i class="fas fa-pen"></i></a>
-        <a href="#" class="btn btn-secondary" title="Visualizar"><i class="fas fa-eye"></i></a>
-        <a href="#" class="btn btn-danger" title="Remover"><i class="fas fa-trash"></i></a>
+        <a href="{{route('clientes_alterar_get')}}?cliente={{$cliente->id}}" class="btn btn-primary" title="Alterar"><i class="fas fa-pen"></i></a>
+        <a href="{{route('clientes_visualizar_get')}}?cliente={{$cliente->id}}" class="btn btn-secondary" title="Visualizar"><i class="fas fa-eye"></i></a>
+        <a href="#" class="btn btn-danger" title="Remover" onclick="modal_remover('{{$cliente->nome}}', '{{$cliente->id}}')"><i class="fas fa-trash"></i></a>
       </td>
     </tr>
-    <tr>
-      <td>Arthur Souza Andrade</td>
-      <td>arthursandrade@icloud.com</td>
-      <td>(16) 3311-6413</td>
-      <td>
-        <a href="#" class="btn btn-primary" title="Alterar"><i class="fas fa-pen"></i></a>
-        <a href="#" class="btn btn-secondary" title="Visualizar"><i class="fas fa-eye"></i></a>
-        <a href="#" class="btn btn-danger" title="Remover"><i class="fas fa-trash"></i></a>
-      </td>
-    </tr>
-    <tr>
-      <td>Arthur Souza Andrade</td>
-      <td>arthursandrade@icloud.com</td>
-      <td>(16) 3311-6413</td>
-      <td>
-        <a href="#" class="btn btn-primary" title="Alterar"><i class="fas fa-pen"></i></a>
-        <a href="#" class="btn btn-secondary" title="Visualizar"><i class="fas fa-eye"></i></a>
-        <a href="#" class="btn btn-danger" title="Remover"><i class="fas fa-trash"></i></a>
-      </td>
-    </tr>
+    @endforeach
   </tbody>
   <tfoot>
     <tr>
@@ -60,6 +42,49 @@
     </tr>
   </tfoot>
 </table>
+
+<!-- Modal para confirmar se deseja remover cliente -->
+<div class="modal fade" id="modal_confirmacao_remover" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Remover cliente</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="mensagem_remover"></p>
+      </div>
+      <div class="modal-footer">
+        <form action="javascript:void(0)" method="POST">
+          @csrf
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          <button type="button" class="btn btn-danger" id="btn_remover" data-dismiss="modal">Remover</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal com retorno sobre o cadastro -->
+<div class="modal fade" id="modal_retorno" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Mensagem</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="mensagens_retorno">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
 @stop
 
 @section('importacoes_css')

@@ -4,16 +4,17 @@
 
 @section('conteudo')
 <form id="form_cadastrar_cliente" method="POST">
+  @csrf
   <div class="row">
     <div class="col-sm-12 col-md-6 form-group">
-      <label for="nome">Nome</label>
+      <label for="nome">Nome <b>*</b></label>
       <input type="text" class="form-control" name="nome" id="nome" placeholder="Digite o nome do cliente ..." autofocus>
     </div>
   </div>
 
   <div class="row">
     <div class="col-sm-12 col-md-6 form-group">
-      <label for="email">E-mail</label>
+      <label for="email">E-mail <b>*</b></label>
       <input type="email" class="form-control" name="email" id="email" placeholder="Digite o e-mail do cliente ...">
     </div>
     <div class="col-sm-12 col-md-2 form-group">
@@ -24,19 +25,19 @@
 
   <div class="row">
     <div class="col-sm-12 col-md-2 form-group">
-      <label for="cep">CEP</label>
-      <input type="text" class="form-control mascara" name="cep" id="cep" aria-describedby="cepInfo" data-inputmask="'mask': '99999-999'"  onchange="buscaEndereco()">
+      <label for="cep">CEP <b>*</b></label>
+      <input type="text" class="form-control mascara" name="cep" id="cep" aria-describedby="cepInfo" data-inputmask="'mask': '99999-999'" onchange="buscaEndereco()">
       <small id="cepInfo" class="form-text text-muted">Ao digitar seu CEP, o endereço será preenchido.</small>
     </div>
   </div>
 
   <div class="row">
     <div class="col-sm-12 col-md-10 form-group">
-      <label for="logradouro">Logradouro</label>
+      <label for="logradouro">Logradouro <b>*</b></label>
       <input type="text" class="form-control" name="logradouro" id="logradouro">
     </div>
     <div class="col-sm-12 col-md-2 form-group">
-      <label for="numero">Número</label>
+      <label for="numero">Número <b>*</b></label>
       <input type="number" class="form-control" name="numero" id="numero">
     </div>
   </div>
@@ -47,23 +48,29 @@
       <input type="text" class="form-control" name="complemento" id="complemento">
     </div>
     <div class="col-sm-12 col-md-3 form-group">
-      <label for="bairro">Bairro</label>
+      <label for="bairro">Bairro <b>*</b></label>
       <input type="text" class="form-control" name="bairro" id="bairro">
     </div>
     <div class="col-sm-12 col-md-3 form-group">
-      <label for="cidade">Cidade</label>
+      <label for="cidade">Cidade <b>*</b></label>
       <input type="text" class="form-control" name="cidade" id="cidade" readonly>
     </div>
     <div class="col-sm-12 col-md-3 form-group">
-      <label for="estado">Estado</label>
+      <label for="estado">Estado <b>*</b></label>
       <input type="text" class="form-control" name="estado" id="estado" readonly>
     </div>
   </div>
 
   <div class="row">
     <div class="col-sm-12 form-group">
+      <p class="form-text">É necessário preencher os campos marcados com <b>*</b> !</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12 form-group">
       <button type="button" class="btn btn-secondary float-left" onclick="validaFormulario()">Voltar</button>
-      <button type="button" class="btn btn-primary ml-1 float-right">Cadastrar</button>
+      <button type="submit" class="btn btn-primary ml-1 float-right" id="btn_cadastrar">Cadastrar</button>
       <button type="button" class="btn btn-danger float-right" data-toggle="modal" data-target="#modal_confirmacao_limpar">Limpar</button>
     </div>
   </div>
@@ -121,8 +128,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <p></p>
+      <div class="modal-body" id="mensagens_retorno">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>

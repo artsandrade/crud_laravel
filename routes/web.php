@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\clientesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,19 +19,17 @@ Route::get('/', function () {
 })->name('painel_get');
 
 Route::prefix('clientes')->group(function () {
-    Route::get('/', function () {
-        return view('clientes.clientes');
-    })->name('clientes_get');
+    Route::get('/', [clientesController::class, 'clientesGet'])->name('clientes_get');
 
-    Route::get('alterar', function () {
-        return view('clientes.alterar');
-    })->name('clientes_alterar_get');
+    Route::get('alterar', [clientesController::class, 'alterarClienteGet'])->name('clientes_alterar_get');
 
-    Route::get('cadastrar', function () {
-        return view('clientes.cadastrar');
-    })->name('clientes_cadastrar_get');
+    Route::post('alterar', [clientesController::class, 'alterarClientePost'])->name('clientes_alterar_postt');
 
-    Route::get('visualizar', function () {
-        return view('clientes.visualizar');
-    })->name('clientes_visualizar_get');
+    Route::get('cadastrar', [clientesController::class, 'cadastrarClienteGet'])->name('clientes_cadastrar_get');
+
+    Route::post('cadastrar', [clientesController::class, 'cadastrarClientePost'])->name('clientes_cadastrar_post');
+
+    Route::get('visualizar', [clientesController::class, 'visualizarClienteGet'])->name('clientes_visualizar_get');
+
+    Route::post('remover', [clientesController::class, 'removerClientePost'])->name('clientes_remover_post');
 });
